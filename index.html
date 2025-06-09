@@ -20,36 +20,6 @@
             }
             return default_value;
         }
-
-        // ================== Start of user settings ==================
-        // You can modify these settings without breaking stuff
-
-        // Thanks to @d3xbot for providing the numbers
-        // ERROR_CORRECTION_LEVEL L – up to 7% damage - MAX_BYTES: 2953
-        // ERROR_CORRECTION_LEVEL M – up to 15% damage - MAX_BYTES: 2331
-        // ERROR_CORRECTION_LEVEL Q – up to 25% damage - MAX_BYTES: 1663
-        // ERROR_CORRECTION_LEVEL H – up to 30% damage - MAX_BYTES: 1273
-        let ERROR_CORRECTION_LEVEL = localStorage.getItem("ERROR_CORRECTION_LEVEL") || "L";
-
-        // Allow users to enable the clipboard monitoring function. Set this to false to hide the checkbox
-        let SHOW_CLIPBOARD_MONITORING_CONTROLS = true;
-
-        // Size of the QR code in pixels. Set it to 0 to automatically fit the free space
-        let QR_MIN_SIZE = get_or_default_int("QR_MIN_SIZE", 30); //in pixels
-        let QR_MAX_SIZE = get_or_default_int("QR_MAX_SIZE", Infinity); // in pixels
-
-        // If you want a border around the QR code (that will stay when you right click -> "Save image as..." the image, set this to something greater than zero)
-        let QR_BORDER_SIZE = get_or_default_int("QR_BORDER_SIZE", 0); // in pixels
-        let QR_BORDER_COLOR = localStorage.getItem("QR_BORDER_COLOR") || "#909090"; // standard html color codes
-
-        let QR_BLACK = localStorage.getItem("QR_BLACK") || "black";
-        let QR_WHITE = localStorage.getItem("QR_WHITE") || "white";
-        let QR_SCALE = get_or_default_int("QR_SCALE", 2);
-
-        // Specify whether you want to use PNG or SVG as your download format.
-        // Defaults to PNG, since it is smaller. You can run 'localStorage.setItem("USE_PNG_DOWNLOAD", "false"); location.reload()' in your console to chenge it to SVG
-        let USE_PNG_DOWNLOAD = (localStorage.getItem("USE_PNG_DOWNLOAD") || "true") == "true"; // true -> .png download, false -> .svg download
-        // =================== End of user settings ===================
     </script>
 
     <style>
@@ -93,10 +63,7 @@
             flex: 1;
         }
 
-        #settings {
-            width: 100%;
-            display: none; /* set this to 'flex' while developing the settings feature to show it by default. Otherwise use 'none'. */
-            flex-direction: column;
+        
         }
 
         #text-and-qr {
@@ -155,46 +122,8 @@
         <a id="download" href="" download>Download</a>
         <a href="https://subhasishsahugit.github.io/QR-Code-generator/" target="_blank" rel="noopener noreferrer">Source code</a>
     </header>
-    <div id="settings">
-        <label><abbr title="Higher values mean bigger QR codes and thus allow fewer contents. But higher values also allow for more damage to printed codes like coffee stains, water damage, partially covered areas, etc">Error correction level</abbr>
-            <select id="setting-ecc">
-                <option value="H">High (up to 30% damage, maximum size 1273 bytes)</option>
-                <option value="Q">Quartile (up to 25% damage, maximum size 1663 bytes)</option>
-                <option value="M">Medium (up to 15% damage, maximum size 2331 bytes)</option>
-                <option value="L">Low (up to 7% damage, maximum size 2953 bytes)</option>
-            </select>
-        </label>
-        <label><abbr title="When you click on the QR code, it gets downloaded. Choose what format to download">QR code download format</abbr>
-            <select id="setting-format">
-                <option value="true">Portable Network Graphics (PNG)</option>
-                <option value="false">Scalable Vector Graphics (SVG)</option>
-            </select>
-        </label>
-        
-    </div>
-    <div id="text-and-qr">
-        <div id="input-div">
-            <div id="input-error" class="error"></div>
-            <textarea id="input" name="input" placeholder="Type the data you want to convert to a QR code here. Alternatively you can try to drag and drop or copy-paste a file in this text box, but not all browsers/operating systems support that." id="" autofocus>You can generate QR codes from any text by typing, copy-pasting or dragging and dropping text into this text box. This includes special characters (like chinese), emojis, etc. Depending on the contents, the maximum size of a QR code is usually about 2953 characters (bytes). If you only type digits or upper case letters, they can be stored more efficiently (up to 4296 upper case letters or 7089 digits per QR code).
-
-If the layout looks strange, try resizing your browser window. The layout always tries to maximize the QR code's size, which can look strange sometimes.
-
-The QR code generation is performed on your local device, no data is sent anywhere. You can even download this file (see button on the top right) and use it when you are not connected to the Internet. To download the QR code, you can just click on it.
-
-Here are some examples of what you can do with QR codes:
-- Link to a website: https://your-website.com/some/page?with=parameters
-- Share email address: mailto:your.name@gmail.com
-- Share phone number: tel:+49123456789
-- Share WLAN network password: WIFI:T:WPA;S:Your WLAN name;P:Your WLAN password;;
-- Send SMS: smsto:+49123456789:Hi John, how are you? 
-- Send email: mailto:recipient@example.com?subject=Test email&body=This is a test email
-- Add second factor to Google Authenticator: otpauth://totp/Issuer Name:alice@google.com?secret=JBSWY3DPEHPK3PXP&issuer=Issuer Name
-
-⚠️ Some features will not work in some browsers. In my experience Google Chrome works best. ⚠️
-</textarea>
-        </div>
-        <div id="qrcode"><div class="error">You need to enable JavaScript to use this page</div></div>
-    </div>
+    
+    
 
 <script type="text/javascript">
     const header = document.getElementById("header");
